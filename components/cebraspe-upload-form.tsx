@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { Info } from 'lucide-react'
@@ -62,7 +62,7 @@ function FileInput({
 export function CebraspecUploadForm() {
   const router = useRouter()
   const {
-    register,
+    control,
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
@@ -123,18 +123,26 @@ export function CebraspecUploadForm() {
         error={errors.especificosFile?.message}
         onChange={(file) => setValue('especificosFile', file as File, { shouldValidate: true })}
       />
+
       <div className="space-y-1.5">
         <Label htmlFor="cargo" className="text-xs text-muted-foreground uppercase tracking-wider">
           Cargo
         </Label>
-        <Input
-          id="cargo"
-          placeholder="Ex: Auditor Fiscal"
-          {...register('cargo')}
-          className={errors.cargo ? 'border-destructive' : ''}
+        <Controller
+          name="cargo"
+          control={control}
+          render={({ field }) => (
+            <Input
+              id="cargo"
+              placeholder="Ex: Auditor Fiscal"
+              className={errors.cargo ? 'border-destructive' : ''}
+              {...field}
+            />
+          )}
         />
         {errors.cargo && <p className="text-xs text-destructive">{errors.cargo.message}</p>}
       </div>
+
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
           <div className="flex items-center gap-1">
@@ -144,19 +152,25 @@ export function CebraspecUploadForm() {
             >
               Questões básicas
             </Label>
-            <Info
-              className="w-3 h-3 text-muted-foreground/60 shrink-0"
-              title="Informe o total de questões do caderno básico. O sistema usa esse valor para validar se a extração foi completa e acionar o OCR de fallback se necessário."
-            />
+            <span title="Informe o total de questões do caderno básico. O sistema usa esse valor para validar se a extração foi completa e acionar o OCR de fallback se necessário.">
+              <Info className="w-3 h-3 text-muted-foreground/60 shrink-0" />
+            </span>
           </div>
-          <Input
-            id="basicosExpectedQuestions"
-            type="number"
-            min={1}
-            max={200}
-            placeholder="Ex: 70"
-            {...register('basicosExpectedQuestions')}
-            className={errors.basicosExpectedQuestions ? 'border-destructive' : ''}
+          <Controller
+            name="basicosExpectedQuestions"
+            control={control}
+            render={({ field }) => (
+              <Input
+                id="basicosExpectedQuestions"
+                type="number"
+                min={1}
+                max={200}
+                placeholder="Ex: 70"
+                className={errors.basicosExpectedQuestions ? 'border-destructive' : ''}
+                {...field}
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+            )}
           />
           {errors.basicosExpectedQuestions && (
             <p className="text-xs text-destructive">{errors.basicosExpectedQuestions.message}</p>
@@ -170,25 +184,32 @@ export function CebraspecUploadForm() {
             >
               Questões específicas
             </Label>
-            <Info
-              className="w-3 h-3 text-muted-foreground/60 shrink-0"
-              title="Informe o total de questões do caderno específico. Cada caderno é validado individualmente pela API."
-            />
+            <span title="Informe o total de questões do caderno específico. Cada caderno é validado individualmente pela API.">
+              <Info className="w-3 h-3 text-muted-foreground/60 shrink-0" />
+            </span>
           </div>
-          <Input
-            id="especificosExpectedQuestions"
-            type="number"
-            min={1}
-            max={200}
-            placeholder="Ex: 50"
-            {...register('especificosExpectedQuestions')}
-            className={errors.especificosExpectedQuestions ? 'border-destructive' : ''}
+          <Controller
+            name="especificosExpectedQuestions"
+            control={control}
+            render={({ field }) => (
+              <Input
+                id="especificosExpectedQuestions"
+                type="number"
+                min={1}
+                max={200}
+                placeholder="Ex: 50"
+                className={errors.especificosExpectedQuestions ? 'border-destructive' : ''}
+                {...field}
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+            )}
           />
           {errors.especificosExpectedQuestions && (
             <p className="text-xs text-destructive">{errors.especificosExpectedQuestions.message}</p>
           )}
         </div>
       </div>
+
       <Button type="submit" className="w-full mt-2" disabled={isSubmitting}>
         {isSubmitting ? (
           <span className="flex items-center gap-2">

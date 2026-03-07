@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -15,7 +15,7 @@ export function FgvUploadForm() {
   const router = useRouter()
   const [fileName, setFileName] = useState<string | null>(null)
   const {
-    register,
+    control,
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
@@ -83,57 +83,73 @@ export function FgvUploadForm() {
         />
         {errors.file && <p className="text-xs text-destructive">{errors.file.message}</p>}
       </div>
+
       <div className="space-y-1.5">
         <Label htmlFor="fgv-cargo" className="text-xs text-muted-foreground uppercase tracking-wider">
           Cargo
         </Label>
-        <Input
-          id="fgv-cargo"
-          placeholder="Ex: Auditor Fiscal"
-          {...register('cargo')}
-          className={errors.cargo ? 'border-destructive' : ''}
+        <Controller
+          name="cargo"
+          control={control}
+          render={({ field }) => (
+            <Input
+              id="fgv-cargo"
+              placeholder="Ex: Auditor Fiscal"
+              className={errors.cargo ? 'border-destructive' : ''}
+              {...field}
+            />
+          )}
         />
         {errors.cargo && <p className="text-xs text-destructive">{errors.cargo.message}</p>}
       </div>
+
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
-          <Label
-            htmlFor="fgv-exam-type"
-            className="text-xs text-muted-foreground uppercase tracking-wider"
-          >
+          <Label htmlFor="fgv-exam-type" className="text-xs text-muted-foreground uppercase tracking-wider">
             Tipo
           </Label>
-          <Input
-            id="fgv-exam-type"
-            placeholder="TIPO 1"
-            {...register('examType')}
-            className={errors.examType ? 'border-destructive' : ''}
+          <Controller
+            name="examType"
+            control={control}
+            render={({ field }) => (
+              <Input
+                id="fgv-exam-type"
+                placeholder="TIPO 1"
+                className={errors.examType ? 'border-destructive' : ''}
+                {...field}
+              />
+            )}
           />
           {errors.examType && (
             <p className="text-xs text-destructive">{errors.examType.message}</p>
           )}
         </div>
         <div className="space-y-1.5">
-          <Label
-            htmlFor="fgv-expected"
-            className="text-xs text-muted-foreground uppercase tracking-wider"
-          >
+          <Label htmlFor="fgv-expected" className="text-xs text-muted-foreground uppercase tracking-wider">
             Nº de questões
           </Label>
-          <Input
-            id="fgv-expected"
-            type="number"
-            min={1}
-            max={200}
-            placeholder="Ex: 60"
-            {...register('expectedQuestions')}
-            className={errors.expectedQuestions ? 'border-destructive' : ''}
+          <Controller
+            name="expectedQuestions"
+            control={control}
+            render={({ field }) => (
+              <Input
+                id="fgv-expected"
+                type="number"
+                min={1}
+                max={200}
+                placeholder="Ex: 60"
+                className={errors.expectedQuestions ? 'border-destructive' : ''}
+                {...field}
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+            )}
           />
           {errors.expectedQuestions && (
             <p className="text-xs text-destructive">{errors.expectedQuestions.message}</p>
           )}
         </div>
       </div>
+
       <Button type="submit" className="w-full mt-2" disabled={isSubmitting}>
         {isSubmitting ? (
           <span className="flex items-center gap-2">
