@@ -28,7 +28,7 @@ export default async function ExamPage({ params }: Props) {
       <div className="border-b border-border pb-6">
         <div className="flex items-start justify-between gap-4 mb-3">
           <div>
-            <h1 className="font-display text-3xl italic">
+            <h1 className="text-2xl font-bold tracking-tight">
               {exam.cargo ?? 'Prova sem cargo'}
             </h1>
             {exam.exam_code && (

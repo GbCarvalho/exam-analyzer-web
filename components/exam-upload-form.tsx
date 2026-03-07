@@ -11,7 +11,7 @@ import { uploadExam } from '@/lib/api'
 export function ExamUploadForm() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [fileName, setFileName] = useState<string | null>(null)
+  const [fileLabel, setFileLabel] = useState<string | null>(null)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -57,17 +57,26 @@ export function ExamUploadForm() {
                 PDF
               </span>
               <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors flex-1 truncate">
-                {fileName ?? 'Escolher arquivo…'}
+                {fileLabel ?? 'Escolher arquivo(s)…'}
               </span>
             </label>
             <input
               id="file"
-              name="file"
+              name="files"
               type="file"
               accept=".pdf"
+              multiple
               required
               className="sr-only"
-              onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
+              onChange={(e) => {
+                const files = e.target.files
+                if (!files || files.length === 0) { setFileLabel(null); return }
+                setFileLabel(
+                  files.length === 1
+                    ? files[0].name
+                    : `${files.length} arquivos selecionados`,
+                )
+              }}
             />
           </div>
 

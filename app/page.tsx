@@ -8,7 +8,7 @@ export default function HomePage() {
           <p className="text-primary text-xs font-mono tracking-[0.2em] uppercase">
             Concursos Públicos
           </p>
-          <h1 className="font-display text-5xl md:text-6xl italic leading-[1.05] text-balance">
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight leading-[1.05] text-balance">
             Analisador<br />de Provas
           </h1>
         </div>

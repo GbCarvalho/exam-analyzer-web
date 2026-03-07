@@ -7,7 +7,7 @@ export function Header() {
       <div className="mx-auto max-w-4xl px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5 group">
           <span className="w-1 h-5 rounded-full bg-primary transition-all group-hover:h-4" />
-          <span className="font-display text-xl italic tracking-wide">
+          <span className="text-xl font-semibold tracking-tight">
             Analisador de Provas
           </span>
         </Link>
