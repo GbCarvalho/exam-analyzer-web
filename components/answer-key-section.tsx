@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { Upload } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -21,6 +22,7 @@ export function AnswerKeySection({ examId, initialAnswerKey }: Props) {
   const [editedAnswers, setEditedAnswers] = useState<Record<string, string>>(
     initialAnswerKey?.answers ?? {},
   )
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   async function handlePdfUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -62,20 +64,37 @@ export function AnswerKeySection({ examId, initialAnswerKey }: Props) {
       <CardContent>
         <Tabs defaultValue={initialAnswerKey ? 'edit' : 'upload'}>
           <TabsList>
-            <TabsTrigger value="upload">Upload PDF</TabsTrigger>
+            <TabsTrigger value="upload">Importar via PDF</TabsTrigger>
             <TabsTrigger value="edit">Editar gabarito</TabsTrigger>
           </TabsList>
 
           <TabsContent value="upload" className="pt-4">
-            <div className="space-y-2">
-              <label className="text-sm">Arquivo PDF do gabarito</label>
-              <Input
-                type="file"
-                accept=".pdf"
-                disabled={loading}
-                onChange={handlePdfUpload}
-              />
-            </div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".pdf"
+              className="sr-only"
+              disabled={loading}
+              onChange={handlePdfUpload}
+            />
+            <button
+              type="button"
+              disabled={loading}
+              onClick={() => fileInputRef.current?.click()}
+              className="w-full flex flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-border hover:border-primary/50 bg-muted/30 hover:bg-muted/60 py-10 px-6 transition-all cursor-pointer group disabled:opacity-50 disabled:pointer-events-none"
+            >
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <Upload className="w-5 h-5 text-primary" />
+              </div>
+              <div className="text-center">
+                <p className="text-sm font-medium text-foreground">
+                  {loading ? 'Enviando…' : 'Clique para selecionar o PDF do gabarito'}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Formatos aceitos: .pdf
+                </p>
+              </div>
+            </button>
           </TabsContent>
 
           <TabsContent value="edit" className="pt-4">

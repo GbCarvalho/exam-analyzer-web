@@ -44,6 +44,7 @@
     --sidebar-border: oklch(0.87 0.006 80);
     --sidebar-ring: oklch(0.56 0.14 60);
   }
+
   .dark {
     --background: oklch(0.09 0.004 75);
     --foreground: oklch(0.93 0.007 80);
@@ -77,16 +78,20 @@
     --sidebar-border: oklch(0.21 0.005 75);
     --sidebar-ring: oklch(0.70 0.14 60);
   }
+
   /* Default to dark color-scheme so browser UI matches before JS runs */
   :root {
     color-scheme: dark;
   }
+
   .light {
     color-scheme: light;
   }
+
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground font-sans;
     font-size: 15px;
@@ -94,11 +99,18 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.025em;
   }
+
   .dark body {
     background-image:
       radial-gradient(ellipse 70% 50% at 5% 100%, oklch(0.70 0.14 60 / 0.07) 0%, transparent 100%),

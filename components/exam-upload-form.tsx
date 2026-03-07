@@ -18,8 +18,8 @@ export function ExamUploadForm({ providers }: Props) {
   }
 
   return (
-    <div className="rounded-xl border border-border overflow-hidden">
-      <div className="h-1 bg-primary" />
+    <div className="rounded-xl border border-border/60 bg-card/80 backdrop-blur-sm shadow-lg shadow-black/5 overflow-hidden">
+      <div className="h-1 bg-gradient-to-r from-primary via-primary/70 to-primary/40" />
       <div className="p-7">
         <h2 className="font-bold text-base mb-6">Enviar prova</h2>
         <div className="space-y-5">

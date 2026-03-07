@@ -36,8 +36,11 @@ export function QuestionList({ examId, questions }: Props) {
   return (
     <ol className="space-y-3">
       {questions.map((q) => (
-        <li key={q.number} className="flex gap-3 text-sm">
-          <span className="font-mono text-muted-foreground w-6 shrink-0 pt-1">
+        <li
+          key={q.number}
+          className="flex gap-3 text-sm rounded-lg bg-card ring-1 ring-foreground/[0.06] p-4 transition-colors hover:ring-foreground/10"
+        >
+          <span className="font-mono text-muted-foreground w-7 shrink-0 pt-0.5 text-right">
             {q.number}.
           </span>
           <textarea

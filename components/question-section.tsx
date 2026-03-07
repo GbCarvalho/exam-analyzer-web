@@ -17,7 +17,7 @@ export function QuestionSection({ examId, questions }: Props) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="font-semibold">Questões ({questions.length})</h2>
+        <h2 className="text-lg font-semibold">Questões ({questions.length})</h2>
         <Button
           variant="outline"
           size="sm"

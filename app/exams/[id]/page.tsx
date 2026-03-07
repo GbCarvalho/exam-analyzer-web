@@ -1,9 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
-import { buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { cn } from '@/lib/utils'
 import { QuestionSection } from '@/components/question-section'
 import { AnswerKeySection } from '@/components/answer-key-section'
 import { fetchExam, fetchAnswerKey, ApiError } from '@/lib/api'
@@ -25,7 +23,8 @@ export default async function ExamPage({ params }: Props) {
 
   return (
     <div className="space-y-8">
-      <div className="border-b border-border pb-8">
+      {/* Exam metadata header */}
+      <div className="rounded-xl bg-card ring-1 ring-foreground/10 p-6">
         <div className="flex items-start justify-between gap-4 mb-3">
           <div>
             <h1 className="text-2xl font-bold tracking-tight">
@@ -64,7 +63,10 @@ export default async function ExamPage({ params }: Props) {
 
       {answerKey && (
         <div className="flex justify-end">
-          <Link href={`/exams/${params.id}/score`} className={cn(buttonVariants())}>
+          <Link
+            href={`/exams/${params.id}/score`}
+            className="inline-flex shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground text-sm font-medium h-8 gap-1.5 px-3 transition-all hover:bg-primary/80"
+          >
             Ir para gabarito →
           </Link>
         </div>

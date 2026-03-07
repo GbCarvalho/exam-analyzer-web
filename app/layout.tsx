@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <Header />
-          <main className="mx-auto max-w-4xl px-4 py-10">{children}</main>
+          <main className="mx-auto max-w-5xl px-4 sm:px-6 py-10">{children}</main>
           <Toaster richColors position="top-right" />
         </ThemeProvider>
       </body>
