@@ -10,7 +10,7 @@ export const cebraspecSchema = z.object({
   especificosFile: pdfFile,
   cargo: z.string().min(1, 'Cargo é obrigatório'),
   expectedQuestions: z.coerce
-    .number({ error: 'Número inválido' })
+    .number({ invalid_type_error: 'Número inválido' })
     .int()
     .min(1, 'Mínimo 1 questão')
     .max(200, 'Máximo 200 questões'),
@@ -21,7 +21,7 @@ export const fgvSchema = z.object({
   cargo: z.string().min(1, 'Cargo é obrigatório'),
   examType: z.string().min(1, 'Tipo é obrigatório'),
   expectedQuestions: z.coerce
-    .number({ error: 'Número inválido' })
+    .number({ invalid_type_error: 'Número inválido' })
     .int()
     .min(1, 'Mínimo 1 questão')
     .max(200, 'Máximo 200 questões'),
