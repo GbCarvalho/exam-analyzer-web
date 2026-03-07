@@ -4,6 +4,7 @@ import type {
   AnalyzeResponse,
   ResultResponse,
   Question,
+  ProviderMeta,
 } from '@/lib/types'
 
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000'
@@ -29,6 +30,15 @@ function extractMessage(body: unknown): string {
 }
 
 // ─── Server-side fetchers (use in Server Components) ────────────────────────
+
+export async function fetchProviders(): Promise<ProviderMeta[]> {
+  const res = await fetch(`${BASE}/providers`, { next: { revalidate: 3600 } })
+  if (!res.ok) {
+    const body = await res.json().catch(() => null)
+    throw new ApiError(res.status, extractMessage(body))
+  }
+  return res.json()
+}
 
 export async function fetchExam(examId: string): Promise<ExamResponse> {
   const res = await fetch(`${BASE}/exams/${examId}`, {

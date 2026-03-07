@@ -3,6 +3,7 @@ import { z } from 'zod'
 const pdfFile = z
   .instanceof(File)
   .refine((f) => f.size > 0, { message: 'Selecione um arquivo' })
+  .refine((f) => f.type === 'application/pdf', { message: 'O arquivo deve ser um PDF' })
 
 export const cebraspecSchema = z.object({
   basicosFile: pdfFile,

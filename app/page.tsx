@@ -1,6 +1,9 @@
 import { ExamUploadForm } from '@/components/exam-upload-form'
+import { fetchProviders } from '@/lib/api'
 
-export default function HomePage() {
+export default async function HomePage() {
+  const providers = await fetchProviders()
+
   return (
     <div className="grid md:grid-cols-[1fr_400px] gap-12 md:gap-16 items-start">
       <div className="space-y-8 md:pt-2">
@@ -28,7 +31,7 @@ export default function HomePage() {
           ))}
         </ul>
       </div>
-      <ExamUploadForm />
+      <ExamUploadForm providers={providers} />
     </div>
   )
 }

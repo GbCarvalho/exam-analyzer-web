@@ -22,6 +22,16 @@ describe('cebraspecSchema', () => {
     expect(result.success).toBe(true)
   })
 
+  it('rejects non-PDF file', () => {
+    const result = cebraspecSchema.safeParse({
+      basicosFile: new File(['x'], 'a.docx', { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }),
+      especificosFile: new File(['x'], 'b.pdf', { type: 'application/pdf' }),
+      cargo: 'Auditor Fiscal',
+      expectedQuestions: 100,
+    })
+    expect(result.success).toBe(false)
+  })
+
   it('rejects expectedQuestions below 1', () => {
     const result = cebraspecSchema.safeParse({
       basicosFile: new File(['x'], 'a.pdf', { type: 'application/pdf' }),
@@ -39,6 +49,16 @@ describe('fgvSchema', () => {
       file: new File(['x'], 'a.pdf', { type: 'application/pdf' }),
       cargo: 'Auditor Fiscal',
       examType: '',
+      expectedQuestions: 60,
+    })
+    expect(result.success).toBe(false)
+  })
+
+  it('rejects non-PDF file', () => {
+    const result = fgvSchema.safeParse({
+      file: new File(['x'], 'a.jpg', { type: 'image/jpeg' }),
+      cargo: 'Auditor Fiscal',
+      examType: 'TIPO 1',
       expectedQuestions: 60,
     })
     expect(result.success).toBe(false)

@@ -1,6 +1,13 @@
 export type Provider = 'cebraspe' | 'fgv' | 'unknown'
 export type BookletType = 'basicos' | 'especificos'
 
+export interface ProviderMeta {
+  id: Provider
+  label: string
+  description: string
+  supports_dual_booklet: boolean
+}
+
 export interface Question {
   number: number
   statement: string
