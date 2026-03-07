@@ -1,6 +1,4 @@
 import Link from 'next/link'
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
 
 export default function NotFound() {
   return (
@@ -9,7 +7,10 @@ export default function NotFound() {
       <p className="text-muted-foreground">
         A prova que você procura não existe ou foi removida.
       </p>
-      <Link href="/" className={cn(buttonVariants({ variant: 'outline' }))}>
+      <Link
+        href="/"
+        className="inline-flex items-center justify-center rounded-lg border border-border bg-background px-2.5 h-8 text-sm font-medium hover:bg-muted hover:text-foreground transition-all"
+      >
         Voltar ao início
       </Link>
     </div>
