@@ -10,7 +10,7 @@ import { AnswerSingleQuestion } from '@/components/answer-single-question'
 import { KeyboardShortcutsDialog } from '@/components/keyboard-shortcuts-dialog'
 import { ScoreCard } from '@/components/score-card'
 import { BreakdownTable } from '@/components/breakdown-table'
-import { gridReducer, createInitialState, type GridMode } from '@/lib/answer-grid-reducer'
+import { gridReducer, createInitialState } from '@/lib/answer-grid-reducer'
 import { analyzeExam, getResult, ApiError } from '@/lib/api'
 import type { ExamResponse, ResultResponse } from '@/lib/types'
 
