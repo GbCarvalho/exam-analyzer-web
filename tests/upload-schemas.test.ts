@@ -1,45 +1,37 @@
 import { describe, it, expect } from 'vitest'
 import { cebraspecSchema, fgvSchema } from '@/lib/upload-schemas'
 
+const validCebraspecBase = {
+  basicosFile: new File(['x'], 'a.pdf', { type: 'application/pdf' }),
+  especificosFile: new File(['x'], 'b.pdf', { type: 'application/pdf' }),
+  cargo: 'Auditor Fiscal',
+  basicosExpectedQuestions: 70,
+  especificosExpectedQuestions: 50,
+}
+
 describe('cebraspecSchema', () => {
-  it('rejects when cargo is empty', () => {
-    const result = cebraspecSchema.safeParse({
-      basicosFile: new File([''], 'a.pdf', { type: 'application/pdf' }),
-      especificosFile: new File([''], 'b.pdf', { type: 'application/pdf' }),
-      cargo: '',
-      expectedQuestions: 100,
-    })
-    expect(result.success).toBe(false)
+  it('accepts valid cebraspe input', () => {
+    expect(cebraspecSchema.safeParse(validCebraspecBase).success).toBe(true)
   })
 
-  it('accepts valid cebraspe input', () => {
-    const result = cebraspecSchema.safeParse({
-      basicosFile: new File(['x'], 'a.pdf', { type: 'application/pdf' }),
-      especificosFile: new File(['x'], 'b.pdf', { type: 'application/pdf' }),
-      cargo: 'Auditor Fiscal',
-      expectedQuestions: 100,
-    })
-    expect(result.success).toBe(true)
+  it('rejects when cargo is empty', () => {
+    expect(cebraspecSchema.safeParse({ ...validCebraspecBase, cargo: '' }).success).toBe(false)
   })
 
   it('rejects non-PDF file', () => {
     const result = cebraspecSchema.safeParse({
+      ...validCebraspecBase,
       basicosFile: new File(['x'], 'a.docx', { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }),
-      especificosFile: new File(['x'], 'b.pdf', { type: 'application/pdf' }),
-      cargo: 'Auditor Fiscal',
-      expectedQuestions: 100,
     })
     expect(result.success).toBe(false)
   })
 
-  it('rejects expectedQuestions below 1', () => {
-    const result = cebraspecSchema.safeParse({
-      basicosFile: new File(['x'], 'a.pdf', { type: 'application/pdf' }),
-      especificosFile: new File(['x'], 'b.pdf', { type: 'application/pdf' }),
-      cargo: 'Auditor Fiscal',
-      expectedQuestions: 0,
-    })
-    expect(result.success).toBe(false)
+  it('rejects basicosExpectedQuestions below 1', () => {
+    expect(cebraspecSchema.safeParse({ ...validCebraspecBase, basicosExpectedQuestions: 0 }).success).toBe(false)
+  })
+
+  it('rejects especificosExpectedQuestions below 1', () => {
+    expect(cebraspecSchema.safeParse({ ...validCebraspecBase, especificosExpectedQuestions: 0 }).success).toBe(false)
   })
 })
 

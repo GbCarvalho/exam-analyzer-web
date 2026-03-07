@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
+import { Info } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -72,7 +73,7 @@ export function CebraspecUploadForm() {
   async function onSubmit(values: CebraspecFormValues) {
     const basicosFd = new FormData()
     basicosFd.append('files', values.basicosFile)
-    basicosFd.append('expected_questions', String(values.expectedQuestions))
+    basicosFd.append('expected_questions', String(values.basicosExpectedQuestions))
     basicosFd.append('cargo', values.cargo)
     basicosFd.append('booklet_type', 'basicos')
 
@@ -87,7 +88,7 @@ export function CebraspecUploadForm() {
 
     const especificosFd = new FormData()
     especificosFd.append('files', values.especificosFile)
-    especificosFd.append('expected_questions', String(values.expectedQuestions))
+    especificosFd.append('expected_questions', String(values.especificosExpectedQuestions))
     especificosFd.append('cargo', values.cargo)
     especificosFd.append('booklet_type', 'especificos')
 
@@ -134,25 +135,59 @@ export function CebraspecUploadForm() {
         />
         {errors.cargo && <p className="text-xs text-destructive">{errors.cargo.message}</p>}
       </div>
-      <div className="space-y-1.5">
-        <Label
-          htmlFor="expectedQuestions"
-          className="text-xs text-muted-foreground uppercase tracking-wider"
-        >
-          Número de questões
-        </Label>
-        <Input
-          id="expectedQuestions"
-          type="number"
-          min={1}
-          max={200}
-          placeholder="Ex: 120"
-          {...register('expectedQuestions')}
-          className={errors.expectedQuestions ? 'border-destructive' : ''}
-        />
-        {errors.expectedQuestions && (
-          <p className="text-xs text-destructive">{errors.expectedQuestions.message}</p>
-        )}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-1">
+            <Label
+              htmlFor="basicosExpectedQuestions"
+              className="text-xs text-muted-foreground uppercase tracking-wider"
+            >
+              Questões básicas
+            </Label>
+            <Info
+              className="w-3 h-3 text-muted-foreground/60 shrink-0"
+              title="Informe o total de questões do caderno básico. O sistema usa esse valor para validar se a extração foi completa e acionar o OCR de fallback se necessário."
+            />
+          </div>
+          <Input
+            id="basicosExpectedQuestions"
+            type="number"
+            min={1}
+            max={200}
+            placeholder="Ex: 70"
+            {...register('basicosExpectedQuestions')}
+            className={errors.basicosExpectedQuestions ? 'border-destructive' : ''}
+          />
+          {errors.basicosExpectedQuestions && (
+            <p className="text-xs text-destructive">{errors.basicosExpectedQuestions.message}</p>
+          )}
+        </div>
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-1">
+            <Label
+              htmlFor="especificosExpectedQuestions"
+              className="text-xs text-muted-foreground uppercase tracking-wider"
+            >
+              Questões específicas
+            </Label>
+            <Info
+              className="w-3 h-3 text-muted-foreground/60 shrink-0"
+              title="Informe o total de questões do caderno específico. Cada caderno é validado individualmente pela API."
+            />
+          </div>
+          <Input
+            id="especificosExpectedQuestions"
+            type="number"
+            min={1}
+            max={200}
+            placeholder="Ex: 50"
+            {...register('especificosExpectedQuestions')}
+            className={errors.especificosExpectedQuestions ? 'border-destructive' : ''}
+          />
+          {errors.especificosExpectedQuestions && (
+            <p className="text-xs text-destructive">{errors.especificosExpectedQuestions.message}</p>
+          )}
+        </div>
       </div>
       <Button type="submit" className="w-full mt-2" disabled={isSubmitting}>
         {isSubmitting ? (
