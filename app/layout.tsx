@@ -28,8 +28,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning className={`dark ${inter.variable} ${geistMono.variable}`}>
-      <body className="antialiased" suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning>
+      <body className={`${inter.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <Header />
           <main className="mx-auto max-w-4xl px-4 py-10">{children}</main>

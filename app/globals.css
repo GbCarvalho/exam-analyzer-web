@@ -77,6 +77,13 @@
     --sidebar-border: oklch(0.21 0.005 75);
     --sidebar-ring: oklch(0.70 0.14 60);
   }
+  /* Default to dark color-scheme so browser UI matches before JS runs */
+  :root {
+    color-scheme: dark;
+  }
+  .light {
+    color-scheme: light;
+  }
   * {
     @apply border-border;
   }
@@ -84,7 +91,6 @@
     @apply bg-background text-foreground font-sans;
     font-size: 15px;
     line-height: 1.65;
-    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
