@@ -115,7 +115,7 @@ describe('SET_MODE', () => {
 
   it('preserves cursor when switching mode', () => {
     const state: GridState = { ...createInitialState(3), cursor: 2 }
-    const next = gridReducer(state, { type: 'SET_MODE', mode: 'multi' })
+    const next = gridReducer(state, { type: 'SET_MODE', mode: 'single' })
     expect(next.cursor).toBe(2)
   })
 })

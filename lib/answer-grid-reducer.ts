@@ -1,4 +1,4 @@
-export type GridMode = 'all' | 'single' | 'multi'
+export type GridMode = 'all' | 'single'
 
 export interface GridState {
   answers: (string | null)[]
