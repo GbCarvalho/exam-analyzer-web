@@ -45,11 +45,21 @@ export function QuestionListBulkSave({ examId, questions }: Props) {
             {q.number}.
           </span>
           <textarea
+            ref={(el) => {
+              if (el) {
+                el.style.height = 'auto'
+                el.style.height = `${el.scrollHeight}px`
+              }
+            }}
             name={`q-${q.number}`}
             defaultValue={q.statement}
-            rows={2}
-            className="flex-1 bg-transparent resize-none leading-relaxed outline-none focus:ring-1 focus:ring-ring rounded px-1 -mx-1"
+            className="flex-1 bg-transparent resize-vertical leading-relaxed outline-none focus:ring-1 focus:ring-ring rounded px-1 -mx-1"
             aria-label={`Enunciado da questão ${q.number}`}
+            onInput={(e) => {
+              const el = e.target as HTMLTextAreaElement
+              el.style.height = 'auto'
+              el.style.height = `${el.scrollHeight}px`
+            }}
           />
         </div>
       ))}
