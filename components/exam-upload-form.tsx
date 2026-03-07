@@ -40,11 +40,11 @@ export function ExamUploadForm() {
   }
 
   return (
-    <div className="rounded-lg border border-border overflow-hidden">
-      <div className="h-0.5 bg-primary" />
-      <div className="p-6">
-        <h2 className="font-semibold text-sm tracking-wide mb-5">Enviar prova</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="rounded-xl border border-border overflow-hidden">
+      <div className="h-1 bg-primary" />
+      <div className="p-7">
+        <h2 className="font-bold text-base mb-6">Enviar prova</h2>
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-1.5">
             <Label htmlFor="file" className="text-xs text-muted-foreground uppercase tracking-wider">
               Arquivo PDF

@@ -25,7 +25,7 @@ export default async function ExamPage({ params }: Props) {
 
   return (
     <div className="space-y-8">
-      <div className="border-b border-border pb-6">
+      <div className="border-b border-border pb-8">
         <div className="flex items-start justify-between gap-4 mb-3">
           <div>
             <h1 className="text-2xl font-bold tracking-tight">
