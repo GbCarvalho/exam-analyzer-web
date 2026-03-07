@@ -3,6 +3,7 @@ import type {
   AnswerKeyResponse,
   AnalyzeResponse,
   ResultResponse,
+  Question,
 } from '@/lib/types'
 
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000'
@@ -139,6 +140,39 @@ export async function getResult(
   resultId: string,
 ): Promise<ResultResponse> {
   const res = await fetch(`${BASE}/exams/${examId}/results/${resultId}`)
+  if (!res.ok) {
+    const body = await res.json().catch(() => null)
+    throw new ApiError(res.status, extractMessage(body))
+  }
+  return res.json()
+}
+
+export async function patchQuestion(
+  examId: string,
+  number: number,
+  statement: string,
+): Promise<Question> {
+  const res = await fetch(`${BASE}/exams/${examId}/questions/${number}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ statement }),
+  })
+  if (!res.ok) {
+    const body = await res.json().catch(() => null)
+    throw new ApiError(res.status, extractMessage(body))
+  }
+  return res.json()
+}
+
+export async function patchQuestions(
+  examId: string,
+  updates: { number: number; statement: string }[],
+): Promise<Question[]> {
+  const res = await fetch(`${BASE}/exams/${examId}/questions`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ updates }),
+  })
   if (!res.ok) {
     const body = await res.json().catch(() => null)
     throw new ApiError(res.status, extractMessage(body))

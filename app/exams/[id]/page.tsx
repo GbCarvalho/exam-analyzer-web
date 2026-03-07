@@ -5,7 +5,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
-import { QuestionList } from '@/components/question-list'
+import { QuestionSection } from '@/components/question-section'
 import { AnswerKeySection } from '@/components/answer-key-section'
 import { fetchExam, fetchAnswerKey, ApiError } from '@/lib/api'
 
@@ -71,10 +71,7 @@ export default async function ExamPage({ params }: Props) {
 
       <Separator />
 
-      <div>
-        <h2 className="font-semibold mb-4">Questões ({exam.questions.length})</h2>
-        <QuestionList questions={exam.questions} />
-      </div>
+      <QuestionSection examId={params.id} questions={exam.questions} />
     </div>
   )
 }
