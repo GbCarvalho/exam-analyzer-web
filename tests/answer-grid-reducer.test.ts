@@ -106,6 +106,18 @@ describe('SET_MODE', () => {
     const next = gridReducer(state, { type: 'SET_MODE', mode: 'all' })
     expect(next.mode).toBe('all')
   })
+
+  it('preserves existing answers when switching mode', () => {
+    const state: GridState = { ...createInitialState(3), answers: ['C', 'E', null] }
+    const next = gridReducer(state, { type: 'SET_MODE', mode: 'single' })
+    expect(next.answers).toEqual(['C', 'E', null])
+  })
+
+  it('preserves cursor when switching mode', () => {
+    const state: GridState = { ...createInitialState(3), cursor: 2 }
+    const next = gridReducer(state, { type: 'SET_MODE', mode: 'multi' })
+    expect(next.cursor).toBe(2)
+  })
 })
 
 describe('SET_CURSOR', () => {
