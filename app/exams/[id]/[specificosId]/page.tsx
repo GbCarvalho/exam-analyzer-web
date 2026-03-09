@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Separator } from '@/components/ui/separator'
@@ -39,17 +40,28 @@ export default async function DualExamPage({ params }: Props) {
         </div>
       </div>
 
+      {basicosKey && especificosKey && (
+        <div className="flex justify-end">
+          <Link
+            href={`/exams/${params.id}/${params.specificosId}/score`}
+            className="inline-flex shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground text-sm font-medium h-8 gap-1.5 px-3 transition-all hover:bg-primary/80"
+          >
+            Pontuar prova →
+          </Link>
+        </div>
+      )}
+
       <Tabs defaultValue="basicos">
-        <TabsList className="mb-6">
-          <TabsTrigger value="basicos">
+        <TabsList variant="line" className="w-full border-b border-border rounded-none p-0 mb-8 justify-start gap-0 overflow-visible">
+          <TabsTrigger value="basicos" className="rounded-none px-6 py-3 text-sm font-medium">
             Questões Básicas
-            <span className="ml-2 text-xs text-muted-foreground font-mono">
+            <span className="ml-2 text-xs font-mono opacity-60">
               {basicos.questions.length}/{basicos.expected_questions}
             </span>
           </TabsTrigger>
-          <TabsTrigger value="especificos">
+          <TabsTrigger value="especificos" className="rounded-none px-6 py-3 text-sm font-medium">
             Questões Específicas
-            <span className="ml-2 text-xs text-muted-foreground font-mono">
+            <span className="ml-2 text-xs font-mono opacity-60">
               {especificos.questions.length}/{especificos.expected_questions}
             </span>
           </TabsTrigger>
