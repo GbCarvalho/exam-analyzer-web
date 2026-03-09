@@ -11,7 +11,12 @@ export function Header() {
             Analisador de Provas
           </span>
         </Link>
-        <ThemeToggle />
+        <div className="flex items-center gap-4">
+          <Link href="/exams" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Minhas provas
+          </Link>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   )
