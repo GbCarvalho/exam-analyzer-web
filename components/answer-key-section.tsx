@@ -19,6 +19,9 @@ interface Props {
 export function AnswerKeySection({ examId, initialAnswerKey }: Props) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [activeTab, setActiveTab] = useState<string>(
+    initialAnswerKey ? 'edit' : 'upload',
+  )
   const [editedAnswers, setEditedAnswers] = useState<Record<string, string>>(
     initialAnswerKey?.answers ?? {},
   )
@@ -62,7 +65,7 @@ export function AnswerKeySection({ examId, initialAnswerKey }: Props) {
         <CardTitle>Gabarito</CardTitle>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue={initialAnswerKey ? 'edit' : 'upload'}>
+        <Tabs value={activeTab} onValueChange={(val) => setActiveTab(val as string)}>
           <TabsList>
             <TabsTrigger value="upload">Importar via PDF</TabsTrigger>
             <TabsTrigger value="edit">Editar gabarito</TabsTrigger>
@@ -113,7 +116,7 @@ export function AnswerKeySection({ examId, initialAnswerKey }: Props) {
                       <Input
                         className="h-8 text-center font-mono uppercase"
                         maxLength={1}
-                        value={ans}
+                        value={ans ?? ''}
                         onChange={(e) =>
                           setEditedAnswers((prev) => ({
                             ...prev,
