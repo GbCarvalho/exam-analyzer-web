@@ -1,5 +1,6 @@
 import type {
   ExamResponse,
+  ExamSummary,
   AnswerKeyResponse,
   AnalyzeResponse,
   ResultResponse,
@@ -30,6 +31,15 @@ function extractMessage(body: unknown): string {
 }
 
 // ─── Server-side fetchers (use in Server Components) ────────────────────────
+
+export async function fetchExams(): Promise<ExamSummary[]> {
+  const res = await fetch(`${BASE}/exams`, { next: { revalidate: 60 } })
+  if (!res.ok) {
+    const body = await res.json().catch(() => null)
+    throw new ApiError(res.status, extractMessage(body))
+  }
+  return res.json()
+}
 
 export async function fetchProviders(): Promise<ProviderMeta[]> {
   const res = await fetch(`${BASE}/providers`, { next: { revalidate: 3600 } })
